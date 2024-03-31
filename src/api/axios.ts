@@ -6,7 +6,11 @@ import { AuthService } from '@/services/auth.service'
 import { authActions } from '@/store/auth/auth.slice'
 
 export const $axios = axios.create({
-  baseURL: 'http://localhost:4200/api',
+  baseURL: `${process.env.SERVER_URL}/api`,
+  headers: {
+    'Content-Type': 'application/json',
+    Accept: 'application/json',
+  },
   withCredentials: true,
 })
 
@@ -23,6 +27,12 @@ $axios.interceptors.response.use(
 
     if (!status || !error.config || error.config._isRetry) return error
 
+    if (status === 400) {
+      const message = error.response.data.message
+      const warning = typeof message === 'string' ? message : message[0]
+      alert(warning)
+    }
+
     if (status === 401) {
       error.config._isRetry = true
 
@@ -31,13 +41,15 @@ $axios.interceptors.response.use(
 
         if (!data.accessToken) return error
         interactWithLocalStorage(ACCESS_TOKEN, data.accessToken)
-
         authActions.updateUser(data)
-        
+
         return $axios.request(originalRequest)
       } catch (error) {
+        setTimeout(() => {
+          window.location.href = '/login'
+        }, 1000)
+
         await AuthService.logout()
-        window.location.href = '/login'
       }
     }
     if (status === 500) {

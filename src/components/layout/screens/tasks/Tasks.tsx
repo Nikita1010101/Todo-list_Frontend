@@ -1,10 +1,14 @@
+'use client'
+
 import React, { FC } from 'react'
-import { Layout } from '../../Layout'
+
+import { TaskService } from '@/services/task.service'
 
 export const Tasks: FC = () => {
-  return (
-    <Layout>
-      <div>Tasks</div>
-    </Layout>
-  )
+  const send = async () => {
+    const { data } = await TaskService.getAll()
+    console.log(data)
+  }
+
+  return <div onClick={send}>Tasks</div>
 }
