@@ -6,7 +6,7 @@ export enum TaskPriority {
   HIGH = 'HIGH',
 }
 
-enum TaskStatus {
+export enum TaskStatus {
   AWAITS = 'AWAITS',
   IN_PROGRESS = 'IN_PROGRESS',
   COMPLETED = 'COMPLETED',
@@ -25,3 +25,10 @@ export interface ITask {
   user: IUser
   creatorId: number
 }
+
+export type TypeTasksGrouping =
+  | 'default'
+  | 'deadline_today'
+  | 'deadline_week'
+  | 'deadline_future'
+  | 'responsibles'

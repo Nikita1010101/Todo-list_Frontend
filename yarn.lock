@@ -219,6 +219,18 @@
   dependencies:
     tslib "^2.4.0"
 
+"@tanstack/query-core@5.28.9":
+  version "5.28.9"
+  resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-5.28.9.tgz#170a7a8794ab73aeffbaf711ac62126479a5d026"
+  integrity sha512-hNlfCiqZevr3GRVPXS3MhaGW5hjcxvCsIQ4q6ff7EPlvFwYZaS+0d9EIIgofnegDaU2BbCDlyURoYfRl5rmzow==
+
+"@tanstack/react-query@^5.28.9":
+  version "5.28.9"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-query/-/react-query-5.28.9.tgz#13c2049daa5db6c3137473e279b209f76d39708e"
+  integrity sha512-vwifBkGXsydsLxFOBMe3+f8kvtDoqDRDwUNjPHVDDt+FoBetCbOWAUHgZn4k+CVeZgLmy7bx6aKeDbe3e8koOQ==
+  dependencies:
+    "@tanstack/query-core" "5.28.9"
+
 "@types/json5@^0.0.29":
   version "0.0.29"
   resolved "https://registry.yarnpkg.com/@types/json5/-/json5-0.0.29.tgz#ee28707ae94e11d2b827bcbe5270bcea7f3e71ee"
@@ -630,6 +642,11 @@ chalk@^4.0.0:
     readdirp "~3.6.0"
   optionalDependencies:
     fsevents "~2.3.2"
+
+classnames@^2.5.1:
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.5.1.tgz#ba774c614be0f016da105c858e7159eae8e7687b"
+  integrity sha512-saHYOzhIQs6wy2sVxTM6bUDsQO4F50V9RQ22qBpEdCW+I+/Wmke2HOl6lS6dTpdxVhb88/I6+Hs+438c3lfUow==
 
 client-only@0.0.1:
   version "0.0.1"

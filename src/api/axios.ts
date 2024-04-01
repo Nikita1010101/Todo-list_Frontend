@@ -4,6 +4,7 @@ import { ACCESS_TOKEN } from '@/constants/token.constant'
 import { interactWithLocalStorage } from '@/utils/interact-with-local-storage'
 import { AuthService } from '@/services/auth.service'
 import { authActions } from '@/store/auth/auth.slice'
+import store from '@/store/store'
 
 export const $axios = axios.create({
   baseURL: `${process.env.SERVER_URL}/api`,
@@ -38,10 +39,11 @@ $axios.interceptors.response.use(
 
       try {
         const { data } = await AuthService.refresh()
+        console.log('🚀 ~ data:', data)
 
         if (!data.accessToken) return error
         interactWithLocalStorage(ACCESS_TOKEN, data.accessToken)
-        authActions.updateUser(data)
+        store.dispatch(authActions.updateUser(data.user))
 
         return $axios.request(originalRequest)
       } catch (error) {
