@@ -39,7 +39,6 @@ $axios.interceptors.response.use(
 
       try {
         const { data } = await AuthService.refresh()
-        console.log('🚀 ~ data:', data)
 
         if (!data.accessToken) return error
         interactWithLocalStorage(ACCESS_TOKEN, data.accessToken)

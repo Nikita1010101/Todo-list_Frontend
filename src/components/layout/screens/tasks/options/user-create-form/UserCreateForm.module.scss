@@ -1,5 +1,5 @@
-.task_create_form {
-  @apply w-[90%] h-4/5 text-center;
+.user_create_form {
+  @apply w-[95%] h-4/5 text-center;
 
   h1 {
     @apply mb-8 text-4xl font-bold text-white;
@@ -9,8 +9,6 @@
     @apply flex justify-around;
 
     form {
-      @apply w-[45%] h-full py-10 flex flex-col justify-center items-center bg-gray-600 rounded-xl shadow;
-
       .input_wrapper {
         @apply w-[70%] h-10 my-2 px-3 flex items-center rounded-lg bg-white;
 
@@ -28,14 +26,24 @@
       }
     }
 
-    .responsibles {
-      @apply w-[45%] h-full py-10 flex flex-col justify-center items-center bg-gray-600 rounded-xl shadow;
+    form,
+    .responsibles,
+    .supervisors {
+      @apply w-[30%] h-full py-10 flex flex-col justify-center items-center bg-gray-600 rounded-xl;
 
-      .responsible {
-        @apply w-[70%] h-10 my-2 px-3 flex items-center rounded-lg bg-white;
+      h2 {
+        @apply mb-5 text-white text-2xl font-medium;
+      }
+
+      .user {
+        @apply w-[70%] h-10 my-2 px-3 flex items-center rounded-lg bg-white cursor-pointer;
 
         &.active {
-          @apply bg-green-200;
+          @apply bg-green-300;
+        }
+
+        &.disabled {
+          @apply opacity-60;
         }
       }
     }

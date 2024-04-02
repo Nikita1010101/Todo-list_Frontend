@@ -7,23 +7,19 @@ import { Eye, EyeOff } from 'lucide-react'
 import { EMAIL_REG_EXP, PASSWORD_REG_EXP } from '@/constants/login-reg-exp.constant'
 import { useAction } from '@/hooks/use-action'
 import { useTypedSelector } from '@/hooks/use-typed-selector'
+import { ILogin } from '@/types/auth.types'
 
 import styles from './Login.module.scss'
 import { useRouter } from 'next/navigation'
 
-interface ILoginForm {
-  email: string
-  password: string
-}
-
 export const Login: FC = () => {
   const router = useRouter()
   const [inputPasswordType, setInputPasswordType] = useState<'text' | 'password'>('password')
-  const { register, handleSubmit } = useForm<ILoginForm>()
+  const { register, handleSubmit } = useForm<ILogin>()
   const { login } = useAction()
   const { user } = useTypedSelector(state => state.auth)
 
-  const onSubmit: SubmitHandler<ILoginForm> = data => {
+  const onSubmit: SubmitHandler<ILogin> = data => {
     login(data)
   }
 

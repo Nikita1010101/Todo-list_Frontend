@@ -1,7 +1,7 @@
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
 
 import { $axios } from '@/api/axios'
-import { IAuthData } from '@/types/auth.types'
+import { IAuthData, IRegister } from '@/types/auth.types'
 import { IUser } from '@/types/user.type'
 
 export const AuthService = {
@@ -27,9 +27,13 @@ export const AuthService = {
     })
   },
 
-  async register(body: Omit<IUser, 'id'>) {
-    return await axios.post<IAuthData>(`${process.env.SERVER_URL}/api/auth/register`, body, {
-      withCredentials: true,
-    })
+  async register(body: IRegister) {
+    return await axios.post<IAuthData, AxiosResponse<IUser>, IRegister>(
+      `${process.env.SERVER_URL}/api/auth/register`,
+      body,
+      {
+        withCredentials: true,
+      }
+    )
   },
 }

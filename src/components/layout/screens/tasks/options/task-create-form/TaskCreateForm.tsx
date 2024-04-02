@@ -1,21 +1,31 @@
-import React, { FC } from 'react'
+'use client'
+
+import React, { FC, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import cn from 'classnames'
 
 import { ITask } from '@/types/task.types'
 import { useCreateTask } from '@/hooks/use-create-task'
+import { useGetSubordinates } from '@/hooks/use-get-subordinates'
+import { useTypedSelector } from '@/hooks/use-typed-selector'
 
 import styles from './TaskCreateForm.module.scss'
-import { useGetSubordinates } from '@/hooks/use-get-subordinates'
+import { ITaskCreateForm } from './TaskCreateForm.interface'
 
-export const TaskCreateForm: FC = () => {
-  const { register, handleSubmit } = useForm<ITask>()
-  const { data } = useGetSubordinates()
-  console.log('🚀 ~ data:', data)
+export const TaskCreateForm: FC<ITaskCreateForm> = ({ closeTaskCreateForm }) => {
+  const [responsibleId, setResponsibleId] = useState<number | null>(null)
+  const { user } = useTypedSelector(state => state.auth)
+  const { register, handleSubmit, reset } = useForm<ITask>()
+  const { data } = useGetSubordinates(user?.id)
   const { create } = useCreateTask()
 
   const onSubmit: SubmitHandler<ITask> = data => {
-    create(data)
+    if (!responsibleId || !user?.id) return
+    create({ ...data, userId: responsibleId, creatorId: user.id })
+    reset()
+    closeTaskCreateForm()
   }
+
   return (
     <div onClick={event => event.stopPropagation()} className={styles.task_create_form}>
       <h1>Create</h1>
@@ -40,9 +50,20 @@ export const TaskCreateForm: FC = () => {
           <div className={styles.input_wrapper}>
             <input type='text' placeholder='Enter title' {...register('title')} />
           </div>
-          <input type='submit' value='Edit' />
+          <input type='submit' value='Create' />
         </form>
-        <div className='responsibles'>{}</div>
+        <div className={styles.responsibles}>
+          {data &&
+            data.map(user => (
+              <div
+                onClick={() => setResponsibleId(user.id)}
+                key={user.id}
+                className={cn(styles.responsible, { [styles.active]: user.id === responsibleId })}
+              >
+                {user.surname + ' ' + user.name + ' ' + user.patronymic}
+              </div>
+            ))}
+        </div>
       </div>
     </div>
   )
